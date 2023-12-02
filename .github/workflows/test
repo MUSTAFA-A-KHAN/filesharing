@@ -1,0 +1,31 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ main ]  # Modify this based on your branch name
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Choose your Python version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # Replace with your requirements file path
+
+    - name: Set up database
+      run: |
+        python manage.py migrate
+
+    - name: Run tests
+      run: |
+        python manage.py test  # Modify this based on your test setup
